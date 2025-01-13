@@ -1,0 +1,18 @@
+BALANCED BRACKETS:
+def isBalanced(s: str) -> str:
+    stack = []
+    matching_bracket = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in matching_bracket.values():
+            stack.append(char)
+        elif char in matching_bracket:
+            if not stack or stack[-1] != matching_bracket[char]:
+                return "NO"
+            stack.pop()
+    return "YES" if not stack else "NO"
+n = int(input())  
+for _ in range(n):
+    s = input().strip()
+    print(isBalanced(s))
+
+
