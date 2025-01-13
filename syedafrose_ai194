@@ -1,4 +1,5 @@
 BALANCED BRACKETS:
+
 def isBalanced(s: str) -> str:
     stack = []
     matching_bracket = {')': '(', '}': '{', ']': '['}
@@ -14,5 +15,93 @@ n = int(input())
 for _ in range(n):
     s = input().strip()
     print(isBalanced(s))
+
+
+
+
+
+
+
+
+QUEUE USING TWO STACKS:
+
+class QueueUsingTwoStacks:
+    def __init__(self):
+        self.in_stack = []
+        self.out_stack = []
+
+    def enqueue(self, x):
+        self.in_stack.append(x)
+
+    def dequeue(self):
+        if not self.out_stack:
+            while self.in_stack:
+                self.out_stack.append(self.in_stack.pop())
+        if self.out_stack:
+            self.out_stack.pop()
+
+    def front(self):
+        if not self.out_stack:
+            while self.in_stack:
+                self.out_stack.append(self.in_stack.pop())
+        if self.out_stack:
+            return self.out_stack[-1]
+
+
+def process_queries(queries):
+    queue = QueueUsingTwoStacks()
+    for query in queries:
+        query_type = query[0]
+        
+        if query_type == 1:
+            queue.enqueue(query[1])
+        elif query_type == 2:
+            queue.dequeue()
+        elif query_type == 3:
+            print(queue.front())
+
+
+
+n = int(input()) 
+queries = []
+
+for _ in range(n):
+    query = list(map(int, input().split()))
+    queries.append(query)
+
+process_queries(queries)
+
+
+
+
+
+
+GAME OF TWO STACKS
+
+def twoStacks(maxSum, a, b):
+    i = 0
+    j = 0
+    current_sum = 0
+    count = 0
+    while i < len(a) and current_sum + a[i] <= maxSum:
+        current_sum += a[i]
+        i += 1
+    max_count = i
+    while j < len(b):
+        current_sum += b[j]
+        j += 1
+        while current_sum > maxSum and i > 0:
+            i -= 1
+            current_sum -= a[i]
+        if current_sum <= maxSum:
+            max_count = max(max_count, i + j)
+    return max_count
+t = int(input())
+for _ in range(t):
+    n, m, maxSum = map(int, input().split()) 
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+    print(twoStacks(maxSum, a, b))
+
 
 
